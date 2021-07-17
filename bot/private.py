@@ -70,7 +70,7 @@ def enter_files(_, msg: types.Message):
     trace_msg = None
     if Config.TRACE_CHANNEL:
         try:
-            media = await msg.forward(chat_id=Config.TRACE_CHANNEL)
+            media = msg.forward(chat_id=Config.TRACE_CHANNEL)
             trace_msg = await media.reply_text(f'**User Name:** {msg.from_user.mention(style="md")}\n\n**User Id:** `{msg.from_user.id}`')
         except PeerIdInvalid:
             logger.warning("Give the correct Channel or Group ID.")
