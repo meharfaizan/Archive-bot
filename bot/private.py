@@ -55,6 +55,12 @@ def enter_files(_, msg: types.Message):
 
             type = msg.document or msg.video or msg.photo or msg.audio
 
+            trace_msg = None
+            if Config.TRACE_CHANNEL:
+                try:
+                    media = msg.forward(chat_id=Config.TRACE_CHANNEL)
+                    trace_msg = media.reply_text(f'**User Name:** {msg.from_user.mention(style="md")}\n\n**User Id:** `{msg.from_user.id}`')
+
             if type.file_size > 2000000000:
                 msg.reply(Msg.too_big)
             elif len(list_dir(uid)) > 501:
@@ -62,13 +68,8 @@ def enter_files(_, msg: types.Message):
             else:
                 downsts = msg.reply(Msg.downloading, True)  # send status-download message
                 msg.download(dir_work(uid))
-                trace_msg = None
-                if Config.TRACE_CHANNEL:
-                    try:
-                        media = msg.forward(chat_id=Config.TRACE_CHANNEL)
-                        trace_msg = media.reply_text(f'**User Name:** {msg.from_user.mention(style="md")}\n\n**User Id:** `{msg.from_user.id}`')
-
-                downsts.delete()  # delete status-download message
+                
+            downsts.delete()  # delete status-download message
 
         else:
             msg.reply(Msg.send_zip)  # if user-status is not "INSERT"
