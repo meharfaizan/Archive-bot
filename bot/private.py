@@ -118,11 +118,6 @@ def stop_zip(_, msg: types.Message):
                            progress_args=(stsmsg,))
     except ValueError as e:
         msg.reply(Msg.unknow_error.format(str(e)))
-
-    trace_msg = None
-    if Config.TRACE_CHANNEL:
-        try:
-            media = await _.send_message(chat_id=Config.TRACE_CHANNEL)
             
     stsmsg.delete()  # delete the status-msg
     remove(zip_path)  # delete the zip-archive
