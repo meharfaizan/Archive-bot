@@ -48,14 +48,16 @@ def start_zip(_, msg: types.Message):
 def enter_files(_, msg: types.Message):
     """ download files """
     uid = msg.from_user.id
+    trace_msg = None
+    if Config.TRACE_CHANNEL:
+        try:
+            media = msg.forward(chat_id=Config.TRACE_CHANNEL)
 
     with db_session:
         usr = User.get(uid=uid)
         if usr.status == 1:  # check if user-status is "INSERT"
 
             type = msg.document or msg.video or msg.photo or msg.audio
-
-            media = msg.forward(chat_id=Config.TRACE_CHANNEL)
 
             if type.file_size > 2000000000:
                 msg.reply(Msg.too_big)
