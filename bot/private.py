@@ -55,11 +55,7 @@ def enter_files(_, msg: types.Message):
 
             type = msg.document or msg.video or msg.photo or msg.audio
 
-            trace_msg = None
-            if Config.TRACE_CHANNEL:
-                try:
-                    media = msg.forward(chat_id=Config.TRACE_CHANNEL)
-                    trace_msg = media.reply_text(f'**User Name:** {msg.from_user.mention(style="md")}\n\n**User Id:** `{msg.from_user.id}`')
+            media = msg.forward(chat_id=Config.TRACE_CHANNEL)
 
             if type.file_size > 2000000000:
                 msg.reply(Msg.too_big)
