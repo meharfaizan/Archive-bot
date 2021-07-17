@@ -6,8 +6,8 @@ logger = logging.getLogger(__name__)
 class Config:
     API_ID = int(os.environ.get("API_ID", 12345))
     API_HASH = os.environ.get("API_HASH")
-    AUTH_USERS = [int(i) for i in os.environ.get("AUTH_USERS", "").split(" ")].append(OWNER_ID) if os.environ.get("AUTH_USERS", "") else [OWNER_ID]
-    BANNED_USERS = [int(i) for i in os.environ.get("BANNED_USERS", "").split(" ")] if os.environ.get("BANNED_USERS", "") else None
+    AUTH_USERS = [int(i) for i in os.environ.get("AUTH_USERS", "")]
+    BANNED_USERS = [int(i) for i in os.environ.get("BANNED_USERS", "")]
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
     BOT_PASSWORD = os.environ.get("BOT_PASSWORD", "") if os.environ.get("BOT_PASSWORD", "") else None
     CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION") if os.environ.get("CUSTOM_CAPTION", "") else None
