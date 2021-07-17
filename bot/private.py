@@ -48,7 +48,7 @@ def start_zip(_, msg: types.Message):
 def enter_files(_, msg: types.Message):
     """ download files """
     uid = msg.from_user.id
-    trace_msg = None
+ 
     if Config.TRACE_CHANNEL:
         try:
             media = msg.forward(chat_id=Config.TRACE_CHANNEL)
