@@ -2,7 +2,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 import datetime
-from ..config import Config
+from sample_config import Config
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
@@ -20,7 +20,7 @@ async def force_sub(c, m):
             button = [[
                 InlineKeyboardButton('join Updates channel', url=f'https://t.me/{Config.FORCE_SUB}')
                 ],[
-                InlineKeyboardButton('🔄 Refresh 🔄', url=f'https://t.me/NewConverter_Bot?start')
+                InlineKeyboardButton('🔄 Refresh 🔄', url=f'https://t.me/NewBotzTestBot?start')
             ]]
             markup = InlineKeyboardMarkup(button)
             return await m.reply_text(text="Hey join in my updates channel to use me.", parse_mode='markdown', reply_markup=markup, quote=True)
