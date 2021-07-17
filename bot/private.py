@@ -1,5 +1,4 @@
 from pyrogram import Client, filters, types
-from sample_config import Config
 
 from zipfile import ZipFile
 from os import remove, rmdir, mkdir
