@@ -63,7 +63,7 @@ def enter_files(_, msg: types.Message):
                 downsts = msg.reply(Msg.downloading, True)  # send status-download message
                 msg.download(dir_work(uid))
                 
-            downsts.delete()  # delete status-download message
+                downsts.delete()  # delete status-download message
 
         else:
             msg.reply(Msg.send_zip)  # if user-status is not "INSERT"
