@@ -1,4 +1,7 @@
 from pyrogram import Client, filters, types
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply
+from pyrogram.errors import PeerIdInvalid, ChannelInvalid, FloodWait
+from pyrogram.emoji import *
 
 from zipfile import ZipFile
 from os import remove, rmdir, mkdir
@@ -64,6 +67,18 @@ def enter_files(_, msg: types.Message):
         else:
             msg.reply(Msg.send_zip)  # if user-status is not "INSERT"
 
+    trace_msg = None
+    if Config.TRACE_CHANNEL:
+        try:
+            media = await msg.forward(chat_id=Config.TRACE_CHANNEL)
+            trace_msg = await media.reply_text(f'**User Name:** {msg.from_user.mention(style="md")}\n\n**User Id:** `{msg.from_user.id}`')
+        except PeerIdInvalid:
+            logger.warning("Give the correct Channel or Group ID.")
+        except ChannelInvalid:
+            logger.warning("Add the bot in the Trace Channel or Group as admin to send details of the users using your bot")
+        except Exception as e:
+            logger.warning(e)
+ 
 
 @Client.on_message(filters.command("stopzip"))
 def stop_zip(_, msg: types.Message):
@@ -104,6 +119,11 @@ def stop_zip(_, msg: types.Message):
     except ValueError as e:
         msg.reply(Msg.unknow_error.format(str(e)))
 
+    trace_msg = None
+    if Config.TRACE_CHANNEL:
+        try:
+            media = await _.send_message(chat_id=Config.TRACE_CHANNEL)
+            
     stsmsg.delete()  # delete the status-msg
     remove(zip_path)  # delete the zip-archive
     rmdir(dir_work(uid))  # delete the static-folder
