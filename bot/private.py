@@ -99,7 +99,7 @@ def stop_zip(_, msg: types.Message):
             msg.reply(Msg.send_zip)
             return
 
-    newfile_name = _.reply(chat_id=msg.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
+    newfile_name = _.send_message(chat_id=msg.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
     newfile_name.delete()
     new_file_name = newfile_name.text
 
