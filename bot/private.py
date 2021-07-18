@@ -22,10 +22,10 @@ def start(_, msg: types.Message):
             commit()
 
     msg.reply(Msg.start(msg))
-    await _.send_message(
-            TRACE_CHANNEL,
-            f"**New User Joined:** \n\nUser [{msg.from_user.first_name}](tg://user?id={msg.from_user.id}) started Bot!!"
-        )
+    _.send_message(
+        TRACE_CHANNEL,
+        f"**New User Joined:** \n\nUser [{msg.from_user.first_name}](tg://user?id={msg.from_user.id}) started Bot!!"
+    )
 
 
 @Client.on_message(filters.command("zip"))
