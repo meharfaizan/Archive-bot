@@ -114,5 +114,6 @@ def stop_zip(_, msg: types.Message):
         msg.reply(Msg.unknow_error.format(str(e)))
 
     stsmsg.delete()  # delete the status-msg
+    stsmsg.reply(f'😀 Thankyou for using me.')
     remove(zip_path)  # delete the zip-archive
     rmdir(dir_work(uid))  # delete the static-folder
