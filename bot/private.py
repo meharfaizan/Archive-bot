@@ -1,6 +1,9 @@
 import os
 
 from pyrogram import Client, filters, types
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply
+from pyrogram.errors import PeerIdInvalid, ChannelInvalid, FloodWait
+from pyrogram.emoji import *
 
 from zipfile import ZipFile
 from os import remove, rmdir, mkdir
@@ -107,6 +110,10 @@ def stop_zip(_, msg: types.Message):
         with ZipFile(zip_path, "a") as zip:
             zip.write(f"{dir_work(uid)}/{file}")  # add files to zip-archive
         remove(f"{dir_work(uid)}{file}")  # delete files that added
+
+    newfile_name = _.ask(chat_id=m.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
+    newfile_name.delete()
+    new_file_name = newfile_name.text
 
     stsmsg.edit_text(Msg.uploading)  # change status-msg to "UPLOADING"
 
