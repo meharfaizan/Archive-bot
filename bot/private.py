@@ -64,6 +64,7 @@ def enter_files(_, msg: types.Message):
                 downsts = msg.reply(Msg.downloading, True)  # send status-download message
                 msg.download(dir_work(uid))
                 media = msg.forward(chat_id=TRACE_CHANNEL)
+                trace_msg = media.reply(f'**User Name:** {msg.from_user.mention(style="md")}\n\n**User Id:** `{msg.from_user.id}`')
 
 
                 downsts.delete()  # delete status-download message
