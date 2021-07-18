@@ -111,7 +111,7 @@ def stop_zip(_, msg: types.Message):
             zip.write(f"{dir_work(uid)}/{file}")  # add files to zip-archive
         remove(f"{dir_work(uid)}{file}")  # delete files that added
 
-    newfile_name = _.ask(chat_id=m.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
+    newfile_name = _.ask(chat_id=msg.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
     newfile_name.delete()
     new_file_name = newfile_name.text
 
