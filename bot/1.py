@@ -9,8 +9,8 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
 
 
-AUTH_USERS = [int(i) for i in os.environ.get("AUTH_USERS")]
-BANNED_USERS = [int(i) for i in os.environ.get("BANNED_USERS")]
+#AUTH_USERS = [int(i) for i in os.environ.get("AUTH_USERS")]
+#BANNED_USERS = [int(i) for i in os.environ.get("BANNED_USERS")]
 FORCE_SUB = os.environ.get("FORCE_SUB")
     
 
@@ -30,23 +30,5 @@ async def force_sub(c, m):
             ]]
             markup = InlineKeyboardMarkup(button)
             return await m.reply_text(text="Hey join in my updates channel to use me.", parse_mode='markdown', reply_markup=markup, quote=True)
-
-        except ChatAdminRequired:
-            logger.warning(f"Make me admin in @{FORCE_SUB}")
-            if m.from_user.id in AUTH_USERS:
-                return await m.reply_text(f"Make me admin in @{FORCE_SUB}")
-
-        except UsernameNotOccupied:
-            logger.warning("The forcesub username was Incorrect. Please give the correct username.")
-            if m.from_user.id in AUTH_USERS:
-                return await m.reply_text("The forcesub username was Incorrect. Please give the correct username.")
-
-        except Exception as e:
-            if "belongs to a user" in str(e):
-                logger.warning("Forcesub username must be a channel username Not yours or any other users username")
-                if m.from_user.id in AUTH_USERS:
-                    return await m.reply_text("Forcesub username must be a channel username Not yours or any other users username")
-            logger.error(e)
-            return await m.reply_text("Some thing went wrong. Try again and if same issue occur contact [Owner](https://t.me/AswanthVK)", disable_web_page_preview=True, quote=True)
 
     await m.continue_propagation()
