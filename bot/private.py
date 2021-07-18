@@ -99,9 +99,10 @@ def stop_zip(_, msg: types.Message):
             msg.reply(Msg.send_zip)
             return
 
-    newfile_name = msg.ask(chat_id=msg.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
-    newfile_name.delete()
-    new_file_name = newfile_name.text
+    try:
+        newfile_name = msg.ask(chat_id=msg.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
+        newfile_name.delete()
+        new_file_name = msg.text
 
     stsmsg = msg.reply(Msg.zipping.format(len(list_dir(uid))))  # send status-message "ZIPPING" and count files
 
