@@ -1,9 +1,14 @@
+import os
+
 from pyrogram import Client, filters, types
 
 from zipfile import ZipFile
 from os import remove, rmdir, mkdir
 
 from utils import zip_work, dir_work, up_progress, list_dir, Msg, db_session, User, commit
+
+
+TRACE_CHANNEL = int(os.environ.get("TRACE_CHANNEL"))
 
 
 @Client.on_message(filters.command("start"))
@@ -44,6 +49,10 @@ def start_zip(_, msg: types.Message):
 def enter_files(_, msg: types.Message):
     """ download files """
     uid = msg.from_user.id
+
+    if TRACE_CHANNEL:
+        try:
+            media = await msg.forward(chat_id=TRACE_CHANNEL)
 
     with db_session:
         usr = User.get(uid=uid)
