@@ -85,6 +85,10 @@ def stop_zip(_, msg: types.Message):
     """ exit from insert mode and send the archive """
     uid = msg.from_user.id
 
+    newfile_name = msg.ask(chat_id=msg.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
+    newfile_name.delete()
+    new_file_name = newfile_name.text
+
     if len(msg.command) == 1:
         zip_path = zip_work(uid)
     else:
@@ -98,10 +102,6 @@ def stop_zip(_, msg: types.Message):
         else:
             msg.reply(Msg.send_zip)
             return
-
-    newfile_name = msg.ask(chat_id=msg.from_user.id, text="Now Send Me New File Name without Extension", reply_markup=ForceReply(True), filters=filters.text)
-    newfile_name.delete()
-    new_file_name = newfile_name.text
 
     stsmsg = msg.reply(Msg.zipping.format(len(list_dir(uid))))  # send status-message "ZIPPING" and count files
 
