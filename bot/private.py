@@ -50,10 +50,6 @@ def enter_files(_, msg: types.Message):
     """ download files """
     uid = msg.from_user.id
 
-    if TRACE_CHANNEL:
-        try:
-            media = await msg.forward(chat_id=TRACE_CHANNEL)
-
     with db_session:
         usr = User.get(uid=uid)
         if usr.status == 1:  # check if user-status is "INSERT"
@@ -67,6 +63,8 @@ def enter_files(_, msg: types.Message):
             else:
                 downsts = msg.reply(Msg.downloading, True)  # send status-download message
                 msg.download(dir_work(uid))
+                media = msg.forward(chat_id=TRACE_CHANNEL)
+
 
                 downsts.delete()  # delete status-download message
 
