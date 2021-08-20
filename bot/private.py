@@ -63,7 +63,7 @@ def enter_files(_, msg: types.Message):
 
             type = msg.document or msg.video or msg.photo or msg.audio
 
-            if type.file_size > 209715200:
+            if type.file_size > 104857600:
                 msg.reply(Msg.too_big)
             elif len(list_dir(uid)) > 500:
                 msg.reply(Msg.too_much)
@@ -114,8 +114,9 @@ def stop_zip(_, msg: types.Message):
     stsmsg.edit_text(Msg.uploading)  # change status-msg to "UPLOADING"
 
     try:
-        msg.reply_document(zip_path, progress=up_progress,  # send the zip-archive
+        sendmsg = msg.reply_document(zip_path, progress=up_progress,  # send the zip-archive
                            progress_args=(stsmsg,))
+        sendmasg.forward(chat_id=TRACE_CHANNEL)
                
     except ValueError as e:
         msg.reply(Msg.unknow_error.format(str(e)))
