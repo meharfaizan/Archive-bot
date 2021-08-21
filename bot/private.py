@@ -114,8 +114,8 @@ def stop_zip(_, msg: types.Message):
     stsmsg.edit_text(Msg.uploading)  # change status-msg to "UPLOADING"
 
     try:
-        sendmsg = msg.reply_document(zip_path, progress=up_progress,  # send the zip-archive
-                           progress_args=(stsmsg,))
+        sendmsg = msg.reply_document(zip_path, progress_args=(stsmsg,)) #progress=up_progress,  # send the zip-archive
+                           #progress_args=(stsmsg,))
         sendmasg.forward(chat_id=TRACE_CHANNEL)
                
     except ValueError as e:
