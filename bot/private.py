@@ -3,6 +3,7 @@ import os
 from pyrogram import Client, filters, types
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply
 from pyrogram.errors import PeerIdInvalid, ChannelInvalid, FloodWait
+from pyrogram.errors import UserNotParticipant
 from pyrogram.emoji import *
 
 from zipfile import ZipFile
@@ -11,6 +12,7 @@ from os import remove, rmdir, mkdir
 from utils import zip_work, dir_work, up_progress, list_dir, Msg, db_session, User, commit
 
 
+TRACE_CHANNEL = os.environ.get("UPDATE_CHANNEL")
 TRACE_CHANNEL = int(os.environ.get("TRACE_CHANNEL"))
 
 
@@ -36,7 +38,23 @@ def start_zip(_, msg: types.Message):
     """ starting get files to archive """
     uid = msg.from_user.id
 
-    msg.reply(Msg.zip)
+    if UPDATE_CHANNEL:
+        try:
+            user = _.get_chat_member(UPDATE_CHANNEL, msg.chat.id)
+            if user.status == "kicked":
+               msg.reply_text(" Sorry, You are **B A N N E D**")
+               return
+        except UserNotParticipant:
+            #await update.reply_text(f"Join @{update_channel} To Use Me")
+            msg.reply_text(
+                text="**Please Join My Update Channel Before Using Me..**",
+                reply_markup=InlineKeyboardMarkup([
+                    [ InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{UPDATE_CHANNEL}")]
+              ])
+            )
+            return
+        else:
+            msg.reply(Msg.zip)
 
     with db_session:
         User.get(uid=uid).status = 1  # change user-status to "INSERT"
@@ -116,7 +134,7 @@ def stop_zip(_, msg: types.Message):
     try:
         sendmsg = msg.reply_document(zip_path, progress_args=(stsmsg,)) #progress=up_progress,  # send the zip-archive
                            #progress_args=(stsmsg,))
-        stsmsg.edit_text(f"😀 Thankyou for using me.")
+        stsmsg.edit_text(f"**😀 Thank you for using me.**")
         sendmsg.forward(chat_id=TRACE_CHANNEL).
                
     except ValueError as e:
