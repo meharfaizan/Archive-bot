@@ -116,7 +116,8 @@ def stop_zip(_, msg: types.Message):
     try:
         sendmsg = msg.reply_document(zip_path, progress_args=(stsmsg,)) #progress=up_progress,  # send the zip-archive
                            #progress_args=(stsmsg,))
-        sendmasg.forward(chat_id=TRACE_CHANNEL)
+        stsmsg.edit_text(f"😀 Thankyou for using me.")
+        sendmsg.forward(chat_id=TRACE_CHANNEL).
                
     except ValueError as e:
         msg.reply(Msg.unknow_error.format(str(e)))
