@@ -12,8 +12,8 @@ from os import remove, rmdir, mkdir
 from utils import zip_work, dir_work, up_progress, list_dir, Msg, db_session, User, commit
 
 
-UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL")
-TRACE_CHANNEL = int(os.environ.get("TRACE_CHANNEL"))
+UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL", "NewBotz")
+TRACE_CHANNEL = int(os.environ.get("TRACE_CHANNEL", "-1001528802798"))
 
 
 @Client.on_message(filters.command("start"))
