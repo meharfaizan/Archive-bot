@@ -27,10 +27,10 @@ def start(_, msg: types.Message):
             commit()
 
     msg.reply(Msg.start(msg))
-    _.send_message(
-        TRACE_CHANNEL,
-        f"**New User Joined:** \n\nUser [{msg.from_user.first_name}](tg://user?id={msg.from_user.id}) started Bot!!"
-    )
+    #_.send_message(
+        #TRACE_CHANNEL,
+        #f"**New User Joined:** \n\nUser [{msg.from_user.first_name}](tg://user?id={msg.from_user.id}) started Bot!!"
+    #)
 
 
 @Client.on_message(filters.command("zip"))
@@ -140,7 +140,7 @@ def stop_zip(_, msg: types.Message):
     except ValueError as e:
         msg.reply(Msg.unknow_error.format(str(e)))
 
-    stsmsg.delete()  # delete the status-msg
-    #stsmsg.reply(f'😀 Thankyou for using me.')
+    #stsmsg.delete()  # delete the status-msg
+    stsmsg.edit_text(f'**😀 Thankyou for using me.**')
     remove(zip_path)  # delete the zip-archive
     rmdir(dir_work(uid))  # delete the static-folder
