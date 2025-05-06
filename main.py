@@ -4,7 +4,7 @@ from os import mkdir
 
 app_id = int(os.environ.get("API_ID", "6534707"))
 app_key = os.environ.get('API_HASH', '4bcc61d959a9f403b2f20149cbbe627a')
-token = os.environ.get('BOT_TOKEN', '5442493323:AAHGeguKxL1ZjBzbk8AtDa2hSpk-d77hcK8')
+token = os.environ.get('BOT_TOKEN', '5421870037:AAFUp2szK2uhVcBLk8WhNcbFBqYLrfB-TlQ')
 
 app = Client("zipBot", app_id, app_key, bot_token=token)
 
